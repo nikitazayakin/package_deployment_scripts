@@ -3,6 +3,16 @@
 #overwrites current package if presents
 set -e
 
+BUILD=false
+
+while getopts b: option
+do
+case "${option}"
+in
+b) BUILD=${OPTARG};;
+esac
+done
+
 #parameters
 #GloriaJeans-ECommerce
 cid_and_pi=glj-ec
@@ -52,10 +62,14 @@ if [ ! -d "$package_config_dir" ]; then
 fi
 
 #build packages
-echo building packages
-cd $hybris_dir/hybris/bin/platform
-ant production #2>/dev/null
-cd $script_dir
+if [ "$BUILD" = true ] ; then
+  echo building packages
+  cd $hybris_dir/hybris/bin/platform
+  ant production #2>/dev/null
+  cd $script_dir
+else
+  echo omitting package creatiion
+fi
 
 echo create metadata.properties
 cp $basefiles_dir/metadata.properties $package_dir
