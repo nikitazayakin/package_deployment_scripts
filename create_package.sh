@@ -8,7 +8,7 @@ set -e
 cid_and_pi=glj-ec
 ver=0.0.1
 hybris_dir=/opt/hybris6_6
-#array or environments values, can be: dev,qa,stage,prod
+#array or environments values, can be: (dev,qa,stage,prod)
 declare -a environments=(dev)
 
 #generated vars
@@ -24,11 +24,11 @@ package_bin_dir=$package_dir/hybris/bin
 #remove 'cp' to 'cp -i' alias if any
 #unalias cp 2>/dev/null
 
-#script starts
+echo script starts
 #echo basefiles dir $basefiles_dir
 #echo curdir+pack $pwd/$package_name
 #echo package dir $package_dir
-echo hybris_packages_dir $hybris_packages_dir
+#echo hybris_packages_dir $hybris_packages_dir
 
 #remove folder if exists
 if [ -d "$package_dir" ]; then
@@ -52,10 +52,10 @@ if [ ! -d "$package_config_dir" ]; then
 fi
 
 #build packages
-#echo building packages
-#cd $hybris_dir/hybris/bin/platform
-#ant production 2>/dev/null
-#cd script_dir
+echo building packages
+cd $hybris_dir/hybris/bin/platform
+ant production #2>/dev/null
+cd $script_dir
 
 echo create metadata.properties
 cp $basefiles_dir/metadata.properties $package_dir
